@@ -22,6 +22,18 @@ const router = createRouter({
       name: 'user',
       component: () => import('../views/UserHomeView.vue'),
       props: true,
+      children: [
+        {
+          path: 'reservation',
+          name: 'reservation',
+          component: () => import('../views/UserReservationView.vue'),
+        },
+        {
+          path: 'order',
+          name: 'order',
+          component: () => import('../views/UserOrderView.vue'),
+        },
+      ],
     },
   ],
 });
