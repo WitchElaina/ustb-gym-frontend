@@ -61,8 +61,16 @@ const logout = () => {
     mode="horizontal"
     :ellipsis="false"
     @select="handleSelect"
+    style="height: 60px; line-height: 60px"
   >
-    <el-menu-item>体育馆预约系统</el-menu-item>
+    <el-menu-item class="logo">
+      <el-image
+        src="https://upload.wikimedia.org/wikipedia/en/f/f8/Logo_University_of_Science_and_Technology_Beijing.png"
+        fit="scale-down"
+        style="height: 60px; width: 60px"
+      />
+    </el-menu-item>
+    <el-menu-item style="font-size: 20px; font-weight: bold">体育馆预约系统</el-menu-item>
     <div class="flex-grow" />
     <el-menu-item index="reservation">预定场馆</el-menu-item>
     <el-menu-item index="order">查看订单</el-menu-item>
