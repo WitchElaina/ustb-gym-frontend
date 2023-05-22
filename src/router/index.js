@@ -33,6 +33,11 @@ const router = createRouter({
           name: 'order',
           component: () => import('../views/UserOrderView.vue'),
         },
+        {
+          path: 'manage',
+          name: 'manage',
+          component: () => import('../views/ManageView.vue'),
+        },
       ],
     },
   ],

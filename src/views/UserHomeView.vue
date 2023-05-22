@@ -40,12 +40,7 @@ onMounted(async () => {
 });
 
 const handleSelect = (index) => {
-  console.log(index);
-  if (index === 'reservation') {
-    router.push({ name: 'reservation', params: { username: props.username } });
-  } else if (index === 'order') {
-    router.push({ name: 'order', params: { username: props.username } });
-  }
+  router.push({ name: index, params: { username: props.username } });
 };
 
 const logout = () => {
@@ -64,16 +59,17 @@ const logout = () => {
     style="height: 60px; line-height: 60px"
   >
     <el-menu-item class="logo">
-      <el-image
+      <!-- <el-image
         src="https://upload.wikimedia.org/wikipedia/en/f/f8/Logo_University_of_Science_and_Technology_Beijing.png"
         fit="scale-down"
         style="height: 60px; width: 60px"
-      />
+      /> -->
     </el-menu-item>
     <el-menu-item style="font-size: 20px; font-weight: bold">体育馆预约系统</el-menu-item>
     <div class="flex-grow" />
     <el-menu-item index="reservation">预定场馆</el-menu-item>
     <el-menu-item index="order">查看订单</el-menu-item>
+    <el-menu-item index="manage" :v-if="role === 'admin'">场馆管理</el-menu-item>
     <el-sub-menu index="2">
       <template #title>用户 {{ username }} (身份 {{ role }})</template>
       <el-menu-item @click="logout">退出登录</el-menu-item>
