@@ -54,9 +54,9 @@
 
 <script setup>
 import { API_SERVER } from '../config';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineEmits } from 'vue';
 
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage, ElMessageBox, ElLoadingService } from 'element-plus';
 
 const room = ref('');
 const date = ref('');
@@ -139,6 +139,12 @@ const reserve = async () => {
     return;
   }
 
+  const loading = ElLoadingService({
+    lock: true,
+    text: '正在预定...',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  });
   // 支付 todo
   const payRes = await fetch(`${API_SERVER}/user/pay`, {
     method: 'POST',
@@ -150,6 +156,14 @@ const reserve = async () => {
       price: price.value,
     }),
   });
+  loading.close();
+
+  if (payRes.status === 200) {
+    ElMessage.success('支付成功');
+  } else {
+    ElMessage.error('支付失败');
+    return;
+  }
 
   const res = await fetch(`${API_SERVER}/reservation`, {
     method: 'POST',
