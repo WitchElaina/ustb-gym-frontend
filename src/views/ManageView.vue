@@ -95,6 +95,7 @@
     <el-table-column prop="studentPrice" label="学生价"></el-table-column>
     <el-table-column prop="teacherPrice" label="教工价"></el-table-column>
     <el-table-column prop="outsiderPrice" label="校外价"></el-table-column>
+    <el-table-column prop="reserver" label="预约者"></el-table-column>
     <el-table-column label="操作">
       <template #default="{ row }">
         <el-button type="danger" @click="deleteRound(row)">删除</el-button>
@@ -144,9 +145,20 @@ const getRounds = async () => {
   });
   const data = await res.json();
   console.log(data);
-  for (const roomIndex of data) {
-    // todo 取出数据
-  }
+  rounds.value = [];
+  data.rounds.map((round) => {
+    rounds.value.push({
+      room: round.room,
+      date: round.date,
+      startTime: round.startTime,
+      endTime: round.endTime,
+      openFor: round.openFor,
+      studentPrice: round.price.student,
+      teacherPrice: round.price.teacher,
+      outsiderPrice: round.price.outsider,
+      reserver: round.reserver,
+    });
+  });
 };
 
 const addRoom = async () => {
@@ -205,6 +217,7 @@ const addRound = async () => {
         teacher: teacherPrice.value,
         outsider: outsiderPrice.value,
       },
+      reserver: 'none',
     }),
   });
   if (res.status === 200) {

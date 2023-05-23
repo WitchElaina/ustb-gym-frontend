@@ -2,6 +2,7 @@
 import { RouterView, useRouter } from 'vue-router';
 import Header from '../components/Header.vue';
 import { API_SERVER } from '../config';
+import { ElLoadingService } from 'element-plus';
 
 import { ref, onMounted } from 'vue';
 
@@ -14,6 +15,7 @@ const reservations = ref([]);
 const activeIndex = ref('reservation'); // 默认选中的菜单
 
 const queryUserInfo = async () => {
+  console.log('uname', props.username);
   const res = await fetch(`${API_SERVER}/user`, {
     method: 'POST',
     headers: {
@@ -26,15 +28,19 @@ const queryUserInfo = async () => {
   if (data.status === 'success') {
     role.value = data.userInfo.role;
     reservations.value = data.userReservation.reservation;
-    // username存入localStorage
+    // 存入localStorage
     localStorage.setItem('username', props.username);
+    localStorage.setItem('role', role.value);
   } else {
     alert('获取用户信息失败');
   }
 };
 
 onMounted(async () => {
-  queryUserInfo();
+  // loading
+  const loading = ElLoadingService();
+  await queryUserInfo();
+  loading.close();
   // 默认跳转到预定场馆
   router.push({ name: 'reservation', params: { username: props.username } });
 });
@@ -45,6 +51,7 @@ const handleSelect = (index) => {
 
 const logout = () => {
   localStorage.removeItem('username');
+  localStorage.removeItem('role');
   router.push({ name: 'login' });
 };
 </script>
@@ -69,7 +76,7 @@ const logout = () => {
     <div class="flex-grow" />
     <el-menu-item index="reservation">预定场馆</el-menu-item>
     <el-menu-item index="order">查看订单</el-menu-item>
-    <el-menu-item index="manage" :v-if="role === 'admin'">场馆管理</el-menu-item>
+    <el-menu-item index="manage" v-if="role === 'admin'">场馆管理</el-menu-item>
     <el-sub-menu index="2">
       <template #title>用户 {{ username }} (身份 {{ role }})</template>
       <el-menu-item @click="logout">退出登录</el-menu-item>

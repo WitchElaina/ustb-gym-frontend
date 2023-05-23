@@ -37,10 +37,7 @@ const login = async () => {
     },
     body: JSON.stringify({ username: username.value, password: password.value }),
   });
-  const data = await res;
-  console.log(data);
-  if (data.status === 200) {
-    alert('登录成功');
+  if (res.status === 200) {
     router.push('/user/' + username.value);
   } else {
     alert('登录失败');
