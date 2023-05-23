@@ -139,6 +139,18 @@ const reserve = async () => {
     return;
   }
 
+  // 支付 todo
+  const payRes = await fetch(`${API_SERVER}/user/pay`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      username: username,
+      price: price.value,
+    }),
+  });
+
   const res = await fetch(`${API_SERVER}/reservation`, {
     method: 'POST',
     headers: {
