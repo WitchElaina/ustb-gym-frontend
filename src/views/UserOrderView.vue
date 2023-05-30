@@ -1,6 +1,6 @@
 <template>
   <div class="user-order-view">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="loadingStatus">
       <el-table-column prop="date" label="日期"></el-table-column>
       <el-table-column prop="time" label="时间"></el-table-column>
       <el-table-column prop="room" label="场馆"></el-table-column>
@@ -28,6 +28,8 @@ const username = localStorage.getItem('username');
 
 const tableData = ref([]);
 
+const loadingStatus = ref(false);
+
 const handleClick = async (row) => {
   const res = await fetch(`${API_SERVER}/cancel`, {
     method: 'POST',
@@ -47,6 +49,7 @@ const handleClick = async (row) => {
 };
 
 const fetchData = async () => {
+  loadingStatus.value = true;
   const res = await fetch(`${API_SERVER}/userorder`, {
     method: 'POST',
     headers: {
@@ -64,6 +67,7 @@ const fetchData = async () => {
       room: item.room,
     });
   });
+  loadingStatus.value = false;
 };
 
 onMounted(() => {

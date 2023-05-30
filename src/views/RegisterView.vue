@@ -16,7 +16,9 @@
     <el-form-item label="角色">
       <el-select v-model="role" placeholder="请选择角色">
         <el-option label="管理员" value="admin"></el-option>
-        <el-option label="普通用户" value="user"></el-option>
+        <el-option label="学生" value="student"></el-option>
+        <el-option label="教工" value="teacher"></el-option>
+        <el-option label="校外" value="outsider"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
@@ -30,6 +32,7 @@
 import { API_SERVER } from '../config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 
@@ -40,7 +43,7 @@ const role = ref('');
 const register = async () => {
   // 校验数据
   if (!username.value || !password.value || !role.value) {
-    alert('请填写完整信息');
+    ElMessage.error('请填写完整信息');
     return;
   }
   const res = await fetch(`${API_SERVER}/register`, {
@@ -53,9 +56,9 @@ const register = async () => {
   const data = await res;
   console.log(data);
   if (data.status === 200) {
-    alert('注册成功');
+    ElMessage.success('注册成功');
   } else {
-    alert('注册失败');
+    ElMessage.error('注册失败');
   }
 };
 </script>

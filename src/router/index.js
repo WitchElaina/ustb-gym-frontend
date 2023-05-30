@@ -33,6 +33,16 @@ const router = createRouter({
           name: 'order',
           component: () => import('../views/UserOrderView.vue'),
         },
+        {
+          path: 'manage',
+          name: 'manage',
+          component: () => import('../views/ManageView.vue'),
+        },
+        {
+          path: 'manage/cdkey',
+          name: 'cdkey',
+          component: () => import('../views/CDKeyView.vue'),
+        },
       ],
     },
   ],
