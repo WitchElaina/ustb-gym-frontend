@@ -109,7 +109,7 @@
 <script setup>
 import { API_SERVER } from '../config';
 import { onMounted, ref } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElLoadingService } from 'element-plus';
 
 const room = ref('');
 const roomAdd = ref('');
@@ -126,6 +126,7 @@ const allRooms = ref([]);
 const rounds = ref([]);
 
 const getRooms = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room`, {
     method: 'POST',
     headers: {
@@ -135,9 +136,11 @@ const getRooms = async () => {
   });
   const data = await res.json();
   allRooms.value = data.rooms;
+  loading.close();
 };
 
 const getRounds = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/round/all`, {
     method: 'POST',
     headers: {
@@ -161,9 +164,11 @@ const getRounds = async () => {
       reserver: round.reserver,
     });
   });
+  loading.close();
 };
 
 const addRoom = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room/add`, {
     method: 'POST',
     headers: {
@@ -181,9 +186,11 @@ const addRoom = async () => {
     ElMessage.error('添加失败');
   }
   roomAdd.value = '';
+  loading.close();
 };
 
 const deleteRoom = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room/delete`, {
     method: 'POST',
     headers: {
@@ -200,9 +207,11 @@ const deleteRoom = async () => {
     ElMessage.error('删除失败');
   }
   roomDelete.value = '';
+  loading.close();
 };
 
 const addRound = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/round/add`, {
     method: 'POST',
     headers: {
@@ -236,9 +245,11 @@ const addRound = async () => {
   studentPrice.value = '';
   teacherPrice.value = '';
   outsiderPrice.value = '';
+  loading.close();
 };
 
 const deleteRound = async (row) => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/round/delete`, {
     method: 'POST',
     headers: {
@@ -257,6 +268,7 @@ const deleteRound = async (row) => {
   } else {
     ElMessage.error('删除失败');
   }
+  loading.close();
 };
 
 onMounted(async () => {

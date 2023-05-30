@@ -37,6 +37,7 @@ const rechargeConfirm = async () => {
 };
 
 const queryUserInfo = async () => {
+  const loading = ElLoadingService();
   console.log('uname', props.username);
   const res = await fetch(`${API_SERVER}/user`, {
     method: 'POST',
@@ -57,13 +58,12 @@ const queryUserInfo = async () => {
   } else {
     ElMessage.error('获取用户信息失败');
   }
+  loading.close();
 };
 
 onMounted(async () => {
   // loading
-  const loading = ElLoadingService();
   await queryUserInfo();
-  loading.close();
   // 默认跳转到预定场馆
   router.push({ name: 'reservation', params: { username: props.username } });
 });
@@ -99,7 +99,10 @@ const logout = () => {
     <div class="flex-grow" />
     <el-menu-item index="reservation">预定场馆</el-menu-item>
     <el-menu-item index="order">查看订单</el-menu-item>
+    <el-menu-item index="dashboard" v-if="role === 'admin'">仪表盘</el-menu-item>
     <el-menu-item index="manage" v-if="role === 'admin'">场馆管理</el-menu-item>
+    <el-menu-item index="usermanage" v-if="role === 'admin'">用户管理</el-menu-item>
+    <el-menu-item index="customtimeorder" v-if="role === 'admin'">业务报表</el-menu-item>
     <el-menu-item index="cdkey" v-if="role === 'admin'">CDKey管理</el-menu-item>
     <el-sub-menu index="2">
       <template #title>用户 {{ username }} (身份 {{ role }})</template>

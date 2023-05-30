@@ -54,7 +54,7 @@
 
 <script setup>
 import { API_SERVER } from '../config';
-import { onMounted, ref, defineEmits } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { ElMessage, ElMessageBox, ElLoadingService } from 'element-plus';
 
@@ -73,6 +73,7 @@ const roleOpenForMap = {
 };
 
 const getRooms = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room`, {
     method: 'POST',
     headers: {
@@ -81,9 +82,11 @@ const getRooms = async () => {
   });
   const data = await res.json();
   allRooms.value = data.rooms;
+  loading.close();
 };
 
 const getRounds = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/round`, {
     method: 'POST',
     headers: {
@@ -109,6 +112,7 @@ const getRounds = async () => {
       });
     }
   });
+  loading.close();
 };
 
 const username = localStorage.getItem('username');
@@ -138,13 +142,7 @@ const reserve = async () => {
   if (confirm !== 'confirm') {
     return;
   }
-
-  const loading = ElLoadingService({
-    lock: true,
-    text: '正在预定...',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
+  const loading = ElLoadingService();
   // 支付 todo
   const payRes = await fetch(`${API_SERVER}/user/pay`, {
     method: 'POST',
@@ -157,11 +155,11 @@ const reserve = async () => {
     }),
   });
   loading.close();
-
+  const payData = await payRes.json();
   if (payRes.status === 200) {
     ElMessage.success('支付成功');
   } else {
-    ElMessage.error('支付失败');
+    ElMessage.error('支付失败: ' + payData['msg']);
     return;
   }
 
@@ -185,6 +183,7 @@ const reserve = async () => {
   } else {
     ElMessage.error('预定失败');
   }
+  loading.close();
 };
 
 onMounted(async () => {
