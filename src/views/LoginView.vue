@@ -23,6 +23,7 @@
 import { API_SERVER } from '../config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 
@@ -40,7 +41,7 @@ const login = async () => {
   if (res.status === 200) {
     router.push('/user/' + username.value);
   } else {
-    alert('登录失败');
+    ElMessage.error('登录失败');
   }
 };
 </script>

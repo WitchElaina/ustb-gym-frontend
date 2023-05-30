@@ -32,6 +32,7 @@
 import { API_SERVER } from '../config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 
@@ -42,7 +43,7 @@ const role = ref('');
 const register = async () => {
   // 校验数据
   if (!username.value || !password.value || !role.value) {
-    alert('请填写完整信息');
+    ElMessage.error('请填写完整信息');
     return;
   }
   const res = await fetch(`${API_SERVER}/register`, {
@@ -55,9 +56,9 @@ const register = async () => {
   const data = await res;
   console.log(data);
   if (data.status === 200) {
-    alert('注册成功');
+    ElMessage.success('注册成功');
   } else {
-    alert('注册失败');
+    ElMessage.error('注册失败');
   }
 };
 </script>

@@ -2,7 +2,7 @@
 import { RouterView, useRouter } from 'vue-router';
 import Header from '../components/Header.vue';
 import { API_SERVER } from '../config';
-import { ElLoadingService } from 'element-plus';
+import { ElLoadingService, ElMessage } from 'element-plus';
 
 import { ref, onMounted } from 'vue';
 
@@ -28,11 +28,11 @@ const rechargeConfirm = async () => {
   });
   const data = await res.json();
   if (data.status === 'success') {
-    alert('充值成功');
+    ElMessage.success('充值成功');
     rechargeDialogVisible.value = false;
     await queryUserInfo();
   } else {
-    alert('充值失败');
+    ElMessage.error('充值失败');
   }
 };
 
@@ -55,7 +55,7 @@ const queryUserInfo = async () => {
     localStorage.setItem('username', props.username);
     localStorage.setItem('role', role.value);
   } else {
-    alert('获取用户信息失败');
+    ElMessage.error('获取用户信息失败');
   }
 };
 
