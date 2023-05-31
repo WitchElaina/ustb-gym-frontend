@@ -1,10 +1,10 @@
 <template>
   <el-timeline class="reservation-timeline">
-    <el-timeline-item placement="top" timestamp="选择场馆和日期">
+    <el-timeline-item placement="top" timestamp="选择场馆和日期" style="width: 100%">
       <!-- 预定的form表单,element plus -->
       <el-form class="reservation-form" label-width="80px">
         <el-form-item label="场馆">
-          <el-select v-model="room" placeholder="请选择场馆">
+          <el-select v-model="room" placeholder="请选择场馆" style="width: 100%">
             <el-option v-for="item in allRooms" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -16,6 +16,7 @@
             placeholder="选择日期"
             value-format="YYYY-MM-DD"
             :disabledDate="disabledDate"
+            style="width: 100%"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
@@ -30,6 +31,7 @@
             v-model="time"
             placeholder="请选择场次"
             @change="price = allPrices[time][role]"
+            style="width: 100%"
           >
             <el-option
               v-for="item in allRounds"
@@ -43,10 +45,15 @@
     </el-timeline-item>
     <el-timeline-item placement="top" timestamp="确认价格">
       <el-form class="reservation-form" label-width="80px">
-        <el-form-item label="价格">{{ price }}</el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="reserve">确认</el-button>
-        </el-form-item>
+        <div class="price">
+          <el-label>消费 </el-label>
+          <el-label style="font-size: 40px; color: orange">{{ price }}</el-label>
+          <el-label>元</el-label>
+          <el-button type="primary" @click="reserve" style="margin-left: 10px" color="orange"
+            >支付并预定</el-button
+          >
+        </div>
+        <el-form-item> </el-form-item>
       </el-form>
     </el-timeline-item>
   </el-timeline>
@@ -194,5 +201,13 @@ onMounted(async () => {
 <style scoped>
 .reservation-timeline {
   padding: 40px;
+  max-width: 500px;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-left: 40px;
 }
 </style>

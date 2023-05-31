@@ -2,7 +2,11 @@
   <el-table :data="allUsers" style="width: 100%" v-loading="loadingStatus">
     <el-table-column label="用户名">
       <template #default="{ row }">
-        <el-input v-model="row.username" placeholder="请输入用户名"></el-input>
+        <el-input
+          v-model="row.username"
+          placeholder="请输入用户名"
+          :readonly="!row.editable"
+        ></el-input>
       </template>
     </el-table-column>
     <el-table-column label="密码">
@@ -10,6 +14,7 @@
         <el-input
           v-model="row.password"
           placeholder="请输入密码"
+          :readonly="!row.editable"
           type="password"
           show-password
         ></el-input>
@@ -17,16 +22,23 @@
     </el-table-column>
     <el-table-column label="角色">
       <template #default="{ row }">
-        <el-input v-model="row.role" placeholder="请输入角色"></el-input>
+        <el-input v-model="row.role" placeholder="请输入角色" :readonly="!row.editable"></el-input>
       </template>
     </el-table-column>
     <el-table-column label="余额">
       <template #default="{ row }">
-        <el-input v-model="row.balance" placeholder="请输入余额"></el-input>
+        <el-input-number
+          v-model="row.balance"
+          placeholder="请输入余额"
+          :readonly="!row.editable"
+          step="100"
+        ></el-input-number>
       </template>
     </el-table-column>
     <el-table-column label="操作">
       <template #default="{ row }">
+        <el-label style="padding-right: 10px">编辑</el-label>
+        <el-switch v-model="row.editable" style="padding-right: 10px"></el-switch>
         <el-button @click="updateUser(row)">更新</el-button>
         <el-button type="danger" @click="deleteUser(row)">删除</el-button>
       </template>
@@ -52,6 +64,9 @@ const getAllUsers = async () => {
   });
   const data = await res.json();
   if (res.status === 200) {
+    data.allUser.map((user) => {
+      user.editable = false;
+    });
     allUsers.value = data.allUser;
   } else {
     ElMessage.error(data.message);
