@@ -82,7 +82,7 @@ const logout = () => {
 <template>
   <el-menu
     :default-active="activeIndex"
-    class="el-menu-demo"
+    class="el-menu"
     mode="horizontal"
     :ellipsis="false"
     @select="handleSelect"
@@ -128,6 +128,13 @@ const logout = () => {
 </template>
 
 <style>
+.el-menu {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #fff;
+}
+
 .flex-grow {
   flex-grow: 1;
 }

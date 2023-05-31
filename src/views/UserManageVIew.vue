@@ -1,11 +1,12 @@
 <template>
-  <el-table :data="allUsers" style="width: 100%" v-loading="loadingStatus">
+  <el-table :data="allUsers" style="width: 100%; margin: 20px" v-loading="loadingStatus">
     <el-table-column label="用户名">
       <template #default="{ row }">
         <el-input
           v-model="row.username"
           placeholder="请输入用户名"
           :readonly="!row.editable"
+          style="width: 60%; min-width: 150px"
         ></el-input>
       </template>
     </el-table-column>
@@ -17,12 +18,23 @@
           :readonly="!row.editable"
           type="password"
           show-password
+          style="width: 60%; min-width: 150px"
         ></el-input>
       </template>
     </el-table-column>
     <el-table-column label="角色">
       <template #default="{ row }">
-        <el-input v-model="row.role" placeholder="请输入角色" :readonly="!row.editable"></el-input>
+        <el-select
+          v-model="row.role"
+          placeholder="请选择角色"
+          style="width: 60%; min-width: 150px"
+          :disabled="!row.editable"
+        >
+          <el-option label="管理员" value="admin"></el-option>
+          <el-option label="学生" value="student"></el-option>
+          <el-option label="教工" value="teacher"></el-option>
+          <el-option label="校外" value="outsider"></el-option>
+        </el-select>
       </template>
     </el-table-column>
     <el-table-column label="余额">
@@ -35,7 +47,7 @@
         ></el-input-number>
       </template>
     </el-table-column>
-    <el-table-column label="操作">
+    <el-table-column label="操作" fixed="right" width="300">
       <template #default="{ row }">
         <el-label style="padding-right: 10px">编辑</el-label>
         <el-switch v-model="row.editable" style="padding-right: 10px"></el-switch>
@@ -121,3 +133,12 @@ onMounted(async () => {
   await getAllUsers();
 });
 </script>
+
+<style>
+.buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100px;
+}
+</style>

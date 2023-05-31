@@ -2,7 +2,7 @@
   <div class="wrapper">
     <!-- 添加room -->
     <h3 class="item-title">添加场馆</h3>
-    <el-form label-width="80px">
+    <el-form label-width="80px" style="width: 60%; max-width: 400px">
       <el-form-item label="场馆名称">
         <el-input v-model="roomAdd" placeholder="请输入场馆名称"></el-input>
       </el-form-item>
@@ -15,9 +15,9 @@
 
     <!-- 删除room -->
     <h3 class="item-title">删除场馆</h3>
-    <el-form label-width="80px">
+    <el-form label-width="80px" style="width: 60%; max-width: 400px">
       <el-form-item label="场馆名称">
-        <el-select v-model="roomDelete" placeholder="请选择场馆名称">
+        <el-select v-model="roomDelete" placeholder="请选择场馆名称" style="width: 100%">
           <el-option v-for="item in allRooms" :key="item" :label="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
@@ -30,9 +30,9 @@
 
     <!-- 添加场地 -->
     <h3 class="item-title">添加场次</h3>
-    <el-form label-width="80px">
+    <el-form label-width="80px" style="width: 60%; max-width: 400px">
       <el-form-item label="选择场馆">
-        <el-select v-model="room" placeholder="请选择场馆名称">
+        <el-select v-model="room" placeholder="请选择场馆名称" style="width: 100%">
           <el-option v-for="item in allRooms" :key="item" :label="item" :value="item"></el-option>
         </el-select>
       </el-form-item>
@@ -42,23 +42,27 @@
           type="date"
           placeholder="选择日期"
           value-format="YYYY-MM-DD"
+          style="width: 100%"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="选择时段">
+      <el-form-item label="开始时间">
         <el-time-select
           v-model="startTime"
           start="08:00"
           end="22:00"
           step="00:30"
           placeholder="开始时间"
+          style="width: 100%"
         ></el-time-select>
-
+      </el-form-item>
+      <el-form-item label="结束时间">
         <el-time-select
           v-model="endTime"
           start="08:00"
           end="22:00"
           step="00:30"
           placeholder="结束时间"
+          style="width: 100%"
         ></el-time-select>
       </el-form-item>
       <el-form-item label="开放对象">
