@@ -1,8 +1,13 @@
 <template>
+  <el-image
+    src="https://gym.ustb.edu.cn/images/content/2022-04/20220420091714719859.jpg"
+    class="background-img"
+    fit="cover"
+  ></el-image>
   <!-- 基于element plus的注册界面 -->
   <el-form class="register-form" label-width="80px">
     <el-form-item label="用户名">
-      <el-input v-model="username" placeholder="请输入用户名"></el-input>
+      <el-input v-model="username" placeholder="请输入用户名" style="width: 100%"></el-input>
     </el-form-item>
     <el-form-item label="密码">
       <el-input
@@ -10,11 +15,12 @@
         placeholder="请输入密码"
         type="password"
         show-password
+        style="width: 100%"
       ></el-input>
     </el-form-item>
     <!-- 选择role -->
     <el-form-item label="角色">
-      <el-select v-model="role" placeholder="请选择角色">
+      <el-select v-model="role" placeholder="请选择角色" style="width: 100%">
         <el-option label="管理员" value="admin"></el-option>
         <el-option label="学生" value="student"></el-option>
         <el-option label="教工" value="teacher"></el-option>
@@ -64,8 +70,29 @@ const register = async () => {
 </script>
 
 <style scoped>
+.background-img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: 100vh;
+  width: 100vw;
+  filter: blur(20px);
+  background: none;
+  transform: scale(1.1);
+}
+
 .register-form {
-  width: 400px;
-  margin: 200px auto;
+  /* center */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 60px;
+  padding-top: 80px;
+  border-radius: 20px;
+  border: 2px solid #eee;
+  box-shadow: 0 5px 20px -10px rgb(0, 0, 0);
 }
 </style>

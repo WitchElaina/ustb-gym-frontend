@@ -1,10 +1,10 @@
 <template>
   <el-timeline class="reservation-timeline">
-    <el-timeline-item placement="top" timestamp="选择场馆和日期">
+    <el-timeline-item placement="top" timestamp="选择场馆和日期" style="width: 100%">
       <!-- 预定的form表单,element plus -->
       <el-form class="reservation-form" label-width="80px">
         <el-form-item label="场馆">
-          <el-select v-model="room" placeholder="请选择场馆">
+          <el-select v-model="room" placeholder="请选择场馆" style="width: 100%">
             <el-option v-for="item in allRooms" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -16,6 +16,7 @@
             placeholder="选择日期"
             value-format="YYYY-MM-DD"
             :disabledDate="disabledDate"
+            style="width: 100%"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
@@ -30,6 +31,7 @@
             v-model="time"
             placeholder="请选择场次"
             @change="price = allPrices[time][role]"
+            style="width: 100%"
           >
             <el-option
               v-for="item in allRounds"
@@ -43,10 +45,15 @@
     </el-timeline-item>
     <el-timeline-item placement="top" timestamp="确认价格">
       <el-form class="reservation-form" label-width="80px">
-        <el-form-item label="价格">{{ price }}</el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="reserve">确认</el-button>
-        </el-form-item>
+        <div class="price">
+          <el-label>消费 </el-label>
+          <el-label style="font-size: 40px; color: orange">{{ price }}</el-label>
+          <el-label>元</el-label>
+          <el-button type="primary" @click="reserve" style="margin-left: 10px" color="orange"
+            >支付并预定</el-button
+          >
+        </div>
+        <el-form-item> </el-form-item>
       </el-form>
     </el-timeline-item>
   </el-timeline>
@@ -54,7 +61,7 @@
 
 <script setup>
 import { API_SERVER } from '../config';
-import { onMounted, ref, defineEmits } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { ElMessage, ElMessageBox, ElLoadingService } from 'element-plus';
 
@@ -73,6 +80,7 @@ const roleOpenForMap = {
 };
 
 const getRooms = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room`, {
     method: 'POST',
     headers: {
@@ -81,9 +89,11 @@ const getRooms = async () => {
   });
   const data = await res.json();
   allRooms.value = data.rooms;
+  loading.close();
 };
 
 const getRounds = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/round`, {
     method: 'POST',
     headers: {
@@ -109,6 +119,7 @@ const getRounds = async () => {
       });
     }
   });
+  loading.close();
 };
 
 const username = localStorage.getItem('username');
@@ -138,13 +149,7 @@ const reserve = async () => {
   if (confirm !== 'confirm') {
     return;
   }
-
-  const loading = ElLoadingService({
-    lock: true,
-    text: '正在预定...',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
+  const loading = ElLoadingService();
   // 支付 todo
   const payRes = await fetch(`${API_SERVER}/user/pay`, {
     method: 'POST',
@@ -157,11 +162,11 @@ const reserve = async () => {
     }),
   });
   loading.close();
-
+  const payData = await payRes.json();
   if (payRes.status === 200) {
     ElMessage.success('支付成功');
   } else {
-    ElMessage.error('支付失败');
+    ElMessage.error('支付失败: ' + payData['msg']);
     return;
   }
 
@@ -185,6 +190,7 @@ const reserve = async () => {
   } else {
     ElMessage.error('预定失败');
   }
+  loading.close();
 };
 
 onMounted(async () => {
@@ -195,5 +201,13 @@ onMounted(async () => {
 <style scoped>
 .reservation-timeline {
   padding: 40px;
+  max-width: 500px;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-left: 40px;
 }
 </style>

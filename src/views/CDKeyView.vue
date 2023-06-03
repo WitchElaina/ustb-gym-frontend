@@ -3,10 +3,14 @@
     <h3 class="item-title">添加CDKEY</h3>
     <el-form label-width="80px">
       <el-form-item label="CDKEY">
-        <el-input v-model="cdkeyAdd" placeholder="请输入cdkey"></el-input>
+        <el-input v-model="cdkeyAdd" placeholder="请输入cdkey" style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item label="金额">
-        <el-input v-model="cdkeyAddBalance" placeholder="请输入金额"></el-input>
+        <el-input
+          v-model="cdkeyAddBalance"
+          placeholder="请输入金额"
+          style="width: 300px"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="addCDKey">添加</el-button>
@@ -31,13 +35,14 @@
 <script setup>
 import { API_SERVER } from '../config';
 import { ref, onMounted } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElLoadingService } from 'element-plus';
 
 const cdkeyAdd = ref('');
 const cdkeyAddBalance = ref('');
 const cdkeyList = ref([]);
 
 const addCDKey = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/cdkey/add`, {
     method: 'POST',
     headers: {
@@ -56,9 +61,11 @@ const addCDKey = async () => {
   } else {
     ElMessage.error('添加失败');
   }
+  loading.close();
 };
 
 const deleteCDKey = async (cdkey) => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/cdkey/delete`, {
     method: 'POST',
     headers: {
@@ -74,9 +81,11 @@ const deleteCDKey = async (cdkey) => {
   } else {
     ElMessage.error('删除失败');
   }
+  loading.close();
 };
 
 const getAllCDKeys = async () => {
+  const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/cdkey/all`, {
     method: 'POST',
     headers: {
@@ -87,6 +96,7 @@ const getAllCDKeys = async () => {
   const data = await res.json();
   console.log(data);
   cdkeyList.value = data.cdkeys;
+  loading.close();
 };
 
 onMounted(async () => {

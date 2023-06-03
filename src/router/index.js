@@ -43,6 +43,21 @@ const router = createRouter({
           name: 'cdkey',
           component: () => import('../views/CDKeyView.vue'),
         },
+        {
+          path: 'manage/dashboard',
+          name: 'dashboard',
+          component: () => import('../views/DashboardView.vue'),
+        },
+        {
+          path: 'manage/usermanage',
+          name: 'usermanage',
+          component: () => import('../views/UserManageView.vue'),
+        },
+        {
+          path: 'manage/customtimeorder',
+          name: 'customtimeorder',
+          component: () => import('../views/CustomTimeOrderView.vue'),
+        },
       ],
     },
   ],
