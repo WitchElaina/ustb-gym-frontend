@@ -1,6 +1,5 @@
 <script setup>
 import { RouterView, useRouter } from 'vue-router';
-import Header from '../components/Header.vue';
 import { API_SERVER } from '../config';
 import { ElLoadingService, ElMessage } from 'element-plus';
 
