@@ -51,7 +51,7 @@ const router = createRouter({
         {
           path: 'manage/usermanage',
           name: 'usermanage',
-          component: () => import('../views/UserManageView.vue'),
+          component: () => import('../views/ManageUserView.vue'),
         },
         {
           path: 'manage/customtimeorder',
