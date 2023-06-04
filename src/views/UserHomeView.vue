@@ -104,10 +104,21 @@ const logout = () => {
     <el-menu-item index="customtimeorder" v-if="role === 'admin'">业务报表</el-menu-item>
     <el-menu-item index="cdkey" v-if="role === 'admin'">CDKey管理</el-menu-item>
     <el-sub-menu index="2">
-      <template #title>用户 {{ username }} (身份 {{ role }})</template>
-      <el-menu-item @click="rechargeDialogVisible = true">
-        余额: {{ balance }}元 (点击充值)
+      <el-divider style="margin: 5px; opacity: 0" />
+      <template #title>欢迎您，用户 {{ username }}</template>
+      <el-menu-item style="align-items: baseline">
+        余额：
+        <span style="color: rgb(21, 155, 23); font-weight: bold; font-size: 25px">
+          {{ balance }}
+        </span>
+        元
       </el-menu-item>
+
+      <el-divider style="margin: 5px" />
+      <el-menu-item>身份: {{ role }}</el-menu-item>
+      <el-menu-item v-if="role !== 'admin'" @click="rechargeDialogVisible = true"
+        >余额充值</el-menu-item
+      >
       <el-menu-item @click="logout">退出登录</el-menu-item>
     </el-sub-menu>
   </el-menu>
