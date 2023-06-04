@@ -5,17 +5,25 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      redirect: '/gateway/login',
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue'),
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/RegisterView.vue'),
+      path: '/gateway',
+      name: 'gateway',
+      component: () => import('../views/GatewayView.vue'),
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('../views/LoginView.vue'),
+        },
+
+        {
+          path: 'register',
+          name: 'register',
+          component: () => import('../views/RegisterView.vue'),
+        },
+      ],
     },
     {
       path: '/user/:username',
