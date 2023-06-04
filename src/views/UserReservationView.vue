@@ -79,6 +79,8 @@ const roleOpenForMap = {
   outsider: '校外',
 };
 
+const emit = defineEmits(['updateBalance']);
+
 const getRooms = async () => {
   const loading = ElLoadingService();
   const res = await fetch(`${API_SERVER}/room`, {
@@ -185,6 +187,13 @@ const reserve = async () => {
 
   const data = await res.json();
   console.log(data);
+  emit('updateBalance');
+  // reset v-model
+  room.value = '';
+  date.value = '';
+  time.value = '';
+  allRounds.value = [];
+
   if (data.status === 'success') {
     ElMessage.success('预定成功');
   } else {
