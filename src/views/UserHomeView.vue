@@ -111,7 +111,7 @@ const logout = () => {
       <el-menu-item @click="logout">退出登录</el-menu-item>
     </el-sub-menu>
   </el-menu>
-  <router-view />
+  <router-view @updateBalance="queryUserInfo()" />
 
   <!-- 充值对话框 -->
   <el-dialog title="充值" v-model="rechargeDialogVisible">
