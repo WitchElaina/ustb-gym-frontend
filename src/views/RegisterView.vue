@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <el-image
-      src="https://gym.ustb.edu.cn/images/content/2022-04/20220420091714719859.jpg"
-      class="background-img"
-      fit="cover"
-    ></el-image> -->
     <!-- 基于element plus的注册界面 -->
     <el-form class="register-form" label-width="80px">
       <el-form-item label="用户名">
@@ -72,18 +67,6 @@ const register = async () => {
 </script>
 
 <style scoped>
-.background-img {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  height: 100vh;
-  width: 100vw;
-  filter: blur(20px);
-  background: none;
-  transform: scale(1.1);
-}
-
 .register-form {
   /* center */
   position: fixed;
