@@ -5,10 +5,10 @@
       class="background-img"
       fit="cover"
     ></el-image>
-    <router-view v-slot="{ Component }" class="router-view">
+    <router-view v-slot="{ Component, route }" class="router-view">
       <transition
-        enter-active-class="animate__animated animate__fadeInUp"
-        leave-active-class="animate__animated animate__fadeOutDown"
+        :enter-active-class="route.meta.enterClass"
+        :leave-active-class="route.meta.leaveClass"
       >
         <component :is="Component" />
       </transition>

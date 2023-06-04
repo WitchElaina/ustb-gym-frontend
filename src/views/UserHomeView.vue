@@ -12,7 +12,7 @@ const router = useRouter();
 const role = ref('');
 const reservations = ref([]);
 const balance = ref(0);
-const activeIndex = ref('reservation'); // 默认选中的菜单
+const activeIndex = ref(''); // 默认选中的菜单
 
 const rechargeDialogVisible = ref(false);
 const rechargeCDKey = ref('');
@@ -63,8 +63,14 @@ const queryUserInfo = async () => {
 onMounted(async () => {
   // loading
   await queryUserInfo();
-  // 默认跳转到预定场馆
-  router.push({ name: 'reservation', params: { username: props.username } });
+  // 普通默认跳转到预定场馆
+  if (role.value !== 'admin') {
+    router.push({ name: 'reservation', params: { username: props.username } });
+    activeIndex.value = 'reservation';
+  } else {
+    router.push({ name: 'dashboard', params: { username: props.username } });
+    activeIndex.value = 'dashboard';
+  }
 });
 
 const handleSelect = (index) => {
@@ -96,9 +102,10 @@ const logout = () => {
     </el-menu-item> -->
     <el-menu-item style="font-size: 20px; font-weight: bold">体育馆预约系统</el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="reservation">预定场馆</el-menu-item>
-    <el-menu-item index="order">查看订单</el-menu-item>
+    <el-menu-item index="reservation" v-if="role !== 'admin'">预定场馆</el-menu-item>
+    <el-menu-item index="order" v-if="role !== 'admin'">查看订单</el-menu-item>
     <el-menu-item index="dashboard" v-if="role === 'admin'">仪表盘</el-menu-item>
+    <el-menu-item index="adminreservation" v-if="role === 'admin'">管理员订场</el-menu-item>
     <el-menu-item index="manage" v-if="role === 'admin'">场馆管理</el-menu-item>
     <el-menu-item index="usermanage" v-if="role === 'admin'">用户管理</el-menu-item>
     <el-menu-item index="customtimeorder" v-if="role === 'admin'">业务报表</el-menu-item>

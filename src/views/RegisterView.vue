@@ -101,5 +101,6 @@ const register = async () => {
   border-radius: 20px;
   border: 2px solid #eee;
   box-shadow: 0 5px 20px -10px rgb(0, 0, 0);
+  min-width: 400px;
 }
 </style>

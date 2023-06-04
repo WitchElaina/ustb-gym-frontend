@@ -16,12 +16,20 @@ const router = createRouter({
           path: 'login',
           name: 'login',
           component: () => import('../views/LoginView.vue'),
+          meta: {
+            enterClass: 'animate__animated animate__fadeInLeft',
+            leaveClass: 'animate__animated animate__fadeOutRight',
+          },
         },
 
         {
           path: 'register',
           name: 'register',
           component: () => import('../views/RegisterView.vue'),
+          meta: {
+            enterClass: 'animate__animated animate__fadeInRight',
+            leaveClass: 'animate__animated animate__fadeOutLeft',
+          },
         },
       ],
     },
@@ -35,6 +43,11 @@ const router = createRouter({
           path: 'reservation',
           name: 'reservation',
           component: () => import('../views/UserReservationView.vue'),
+        },
+        {
+          path: 'adminreservation',
+          name: 'adminreservation',
+          component: () => import('../views/AdminReservationView.vue'),
         },
         {
           path: 'order',
