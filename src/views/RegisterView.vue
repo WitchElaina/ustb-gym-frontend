@@ -1,49 +1,51 @@
 <template>
-  <!-- 基于element plus的注册界面 -->
-  <el-form class="register-form" label-width="80px">
-    <el-form-item label="用户名">
-      <el-input v-model="username" placeholder="请输入用户名" style="width: 100%"></el-input>
-    </el-form-item>
-    <el-form-item label="密码">
-      <el-input
-        v-model="password"
-        placeholder="请输入密码"
-        type="password"
-        show-password
-        style="width: 100%"
-      ></el-input>
-    </el-form-item>
-    <!-- 选择role -->
-    <el-form-item label="角色">
-      <el-select v-model="role" placeholder="请选择角色" style="width: 100%">
-        <el-option label="管理员" value="admin"></el-option>
-        <el-option label="学生" value="student"></el-option>
-        <el-option label="教工" value="teacher"></el-option>
-        <el-option label="校外" value="outsider"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="注册码" v-show="role === 'admin'">
-      <el-input
-        v-model="adminCheck"
-        placeholder="请输入管理员注册码"
-        type="password"
-        show-password
-        style="width: 85%; margin-right: 10px"
-      ></el-input>
-      <el-tooltip
-        effect="dark"
-        content="管理员注册码由系统分发, 默认为 admin"
-        placement="top"
-        :open-delay="200"
-      >
-        <el-icon><QuestionFilled /></el-icon>
-      </el-tooltip>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="register">注册</el-button>
-      <el-button @click="router.push('/login')">返回登录</el-button>
-    </el-form-item>
-  </el-form>
+  <div>
+    <!-- 基于element plus的注册界面 -->
+    <el-form class="register-form" label-width="80px">
+      <el-form-item label="用户名">
+        <el-input v-model="username" placeholder="请输入用户名" style="width: 100%"></el-input>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input
+          v-model="password"
+          placeholder="请输入密码"
+          type="password"
+          show-password
+          style="width: 100%"
+        ></el-input>
+      </el-form-item>
+      <!-- 选择role -->
+      <el-form-item label="角色">
+        <el-select v-model="role" placeholder="请选择角色" style="width: 100%">
+          <el-option label="管理员" value="admin"></el-option>
+          <el-option label="学生" value="student"></el-option>
+          <el-option label="教工" value="teacher"></el-option>
+          <el-option label="校外" value="outsider"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="注册码" v-show="role === 'admin'">
+        <el-input
+          v-model="adminCheck"
+          placeholder="请输入管理员注册码"
+          type="password"
+          show-password
+          style="width: 85%; margin-right: 10px"
+        ></el-input>
+        <el-tooltip
+          effect="dark"
+          content="管理员注册码由系统分发, 默认为 admin"
+          placement="top"
+          :open-delay="200"
+        >
+          <el-icon><QuestionFilled /></el-icon>
+        </el-tooltip>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="register">注册</el-button>
+        <el-button @click="router.push({ name: 'login' })">返回登录</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script setup>
