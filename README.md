@@ -6,6 +6,8 @@
 
 北科软件工程课设项目 **体育场馆预约管理系统** 前端代码
 
+！！Demo页需要使用**http**协议访问，使用https无法与后端API服务器通讯
+
 后端代码 [WitchElaina/ustb-gym-backend](https://github.com/WitchElaina/ustb-gym-backend)
 
 Docker 镜像 https://hub.docker.com/r/witchelaina/ustb-gym-frontend
